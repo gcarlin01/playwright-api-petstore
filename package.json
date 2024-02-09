@@ -1,0 +1,22 @@
+{
+  "name": "playwright-api-petstore",
+  "version": "1.0.0",
+  "description": "Playwright based test API",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gcarlin01/playwright-api-petstore.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gcarlin01/playwright-api-petstore/issues"
+  },
+  "homepage": "https://github.com/gcarlin01/playwright-api-petstore#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.41.2",
+    "@types/node": "^20.11.17"
+  }
+}
