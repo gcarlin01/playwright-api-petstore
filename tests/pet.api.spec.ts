@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { randomInt } from 'crypto';
+
 
 test.describe ("Pet API", () => {
 
@@ -78,4 +78,34 @@ test.describe ("Pet API", () => {
   expect(resultBody.category.name).toEqual('pointer-dog');
   expect(resultBody.tags[0].name).toEqual('perro-maloso');
   })
+
+  test('delete a pet [/pet/{petId}]', async ({ request }) => {
+    const response = await request.post('https://petstore.swagger.io/v2/pet', { data: {
+      id: 321,
+      category: {
+        id: 123,
+        name: "t-rex"
+      },
+      name: "Rex",
+      photoUrls: [],
+      tags: [
+        {
+          id: 111,
+          name: "green"
+        }
+      ],
+      status: "available"
+      }
+    });
+    expect(response.status()).toBe(200);
+    const responseBody = await response.json();
+    const petId = responseBody.id;
+    const result = await request.delete(`https://petstore.swagger.io/v2/pet/`+petId, { headers :{
+      api_key : "special-key",
+  } });
+    expect(result.status()).toBe(200);
+    const resultBody = await result.json();
+    console.log(resultBody);
+    expect(resultBody.message).toEqual('321');
+  });
 });
