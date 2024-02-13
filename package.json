@@ -18,5 +18,9 @@
   "devDependencies": {
     "@playwright/test": "^1.41.2",
     "@types/node": "^20.11.17"
+  },
+  "dependencies": {
+    "form-data": "^4.0.0",
+    "formdata-node": "^6.0.3"
   }
 }
