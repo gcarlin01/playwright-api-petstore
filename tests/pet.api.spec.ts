@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-
+import fs from 'fs';
+import FormData from 'form-data';
 
 test.describe ("Pet API", () => {
 
@@ -105,7 +106,32 @@ test.describe ("Pet API", () => {
   } });
     expect(result.status()).toBe(200);
     const resultBody = await result.json();
-    console.log(resultBody);
     expect(resultBody.message).toEqual('321');
+  });
+  test('updates an image [/pet/{petId}/uploadImage]', async ({ request }) => {
+    
+    const fileName = 'rayo.jpeg';
+    const url = 'https://petstore.swagger.io/v2/pet/789/uploadImage';
+  
+    const fileBuffer = await fs.promises.readFile(fileName);
+    const message = "rayo el perro maloso";
+  
+    const formData = new FormData();
+    formData.append('file', fileBuffer);
+    formData.append('additionalMetadata', message);
+  
+    const boundary = formData.getBoundary();
+    const headers = {
+      'Content-Type': `multipart/form-data; boundary=${boundary}`,
+    };
+  
+    const response = await request.post(url, {
+      data: formData.getBuffer().toString(),
+      headers,
+    });
+
+    expect(response.status()).toBe(200);
+    const responseBody = await response.json();
+    expect(responseBody.message).toContain('rayo el perro maloso');
   });
 });
