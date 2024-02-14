@@ -104,7 +104,7 @@ test.describe ("Pet API", () => {
         }
       ],
       status: "available"
-      }
+    }
     });
     expect(result.status()).toBe(200);
     const resultBody = await result.json();
@@ -112,7 +112,6 @@ test.describe ("Pet API", () => {
     const response = await request.get('https://petstore.swagger.io/v2/pet/'+petId);
     expect(response.status()).toBe(200);
     const responseBody = await response.json();
-    console.log(responseBody)
     const actualPetId = responseBody.id;
     expect(actualPetId).toEqual(petId);
     expect (responseBody.name).toEqual('Sofia');
@@ -122,18 +121,14 @@ test.describe ("Pet API", () => {
     const result = await request.post('https://petstore.swagger.io/v2/pet/123', { form: {
       name: 'Sofia the cat',
       status: 'sold'
-  }
-  });
-  console.log(result)
-  expect(result.status()).toBe(200);
-  const resultBody = await result.json();
-  console.log(resultBody)
-  expect(resultBody.message).toEqual("123");
-  
-  const response = await request.get('https://petstore.swagger.io/v2/pet/123');
+    }
+    });
+    expect(result.status()).toBe(200);
+    const resultBody = await result.json();
+    expect(resultBody.message).toEqual("123");
+    const response = await request.get('https://petstore.swagger.io/v2/pet/123');
     expect(response.status()).toBe(200);
     const responseBody = await response.json();
-    console.log(responseBody)
     const actualPetId = responseBody.id;
     expect(actualPetId).toEqual(123);
     expect (responseBody.name).toEqual('Sofia the cat');
