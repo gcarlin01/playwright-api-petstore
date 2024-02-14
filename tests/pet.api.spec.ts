@@ -108,7 +108,7 @@ test.describe ("Pet API", () => {
     const resultBody = await result.json();
     expect(resultBody.message).toEqual('321');
   });
-  test('updates an image [/pet/{petId}/uploadImage]', async ({ request }) => {
+  test('uploads an image for existing pet[/pet/{petId}/uploadImage]', async ({ request }) => {
     
     const fileName = 'rayo.jpeg';
     const url = 'https://petstore.swagger.io/v2/pet/789/uploadImage';
@@ -133,5 +133,16 @@ test.describe ("Pet API", () => {
     expect(response.status()).toBe(200);
     const responseBody = await response.json();
     expect(responseBody.message).toContain('rayo el perro maloso');
+  });
+
+  test('get pet by status [/pet/findByStatus]', async ({ request }) => {
+    const response = await request.get('https://petstore.swagger.io/v2/pet/findByStatus', {
+      params: {
+        status: 'available',
+      }
+    });
+    expect(response.status()).toBe(200);
+    const responseBody = await response.json();
+    expect(responseBody[0].status).toBe('available');
   });
 });
